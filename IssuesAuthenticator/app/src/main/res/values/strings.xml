@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">IssuesAuthenticator</string>
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
+    <string name="button_send">Entrar</string>
+    <string name="title">Entre seu usuário e senha MyDenox</string>
+</resources>
