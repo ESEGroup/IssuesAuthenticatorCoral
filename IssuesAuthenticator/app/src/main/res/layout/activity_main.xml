@@ -39,7 +39,7 @@
         android:id="@+id/button"
         android:layout_width="82dp"
         android:layout_height="48dp"
-        android:onClick="sendMessage"
+        android:onClick="preferenceOptions"
         android:text="@string/button_send"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"

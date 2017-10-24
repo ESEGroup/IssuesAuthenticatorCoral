@@ -4,4 +4,9 @@
     <string name="senha">Senha</string>
     <string name="button_send">Entrar</string>
     <string name="title">Entre seu usuário e senha MyDenox</string>
+    <string name="ZC">Zona de Conforto</string>
+    <string name="temp">Temperatura</string>
+    <string name="umi">Umidade</string>
+    <string name="max">Máx</string>
+    <string name="min">Min</string>
 </resources>
