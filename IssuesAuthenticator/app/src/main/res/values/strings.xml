@@ -3,14 +3,15 @@
     <string name="login">Login</string>
     <string name="senha">Senha</string>
     <string name="button_send">Entrar</string>
-    <string name="title">Entre seu usuário e senha MyDenox</string>
+    <string name="title">Login Issues Monitoring</string>
     <string name="ZC">Zona de Conforto</string>
-    <string name="temp">Temperatura (Laboratório)</string>
-    <string name="temp2">Temperatura (Máquinas)</string>
+    <string name="temp">Temperatura</string>
     <string name="lumi">Luminosidade</string>
     <string name="lab">Lab: </string>
     <string name="umi">Umidade</string>
     <string name="max">Máx</string>
     <string name="min">Min</string>
     <string name="save">Salvar</string>
+    <string name="lab1">LENS 1</string>
+    <string name="lab2">LENS 2</string>
 </resources>
