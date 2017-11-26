@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-/**
- * Created by Tuniks on 11/15/2017.
- */
 
 public class LabActivity extends AppCompatActivity {
 
