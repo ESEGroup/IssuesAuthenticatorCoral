@@ -32,7 +32,7 @@ public class LabActivity extends AppCompatActivity {
         switch(v.getId()){
             case R.id.button4:          //LENS1 IS CLICKED
                 sendLab.putExtra("labID","LENS 1");
-                if(ssid.equals("WLAN-DEL")){
+                if(ssid.equals("Padang2.0")){
                     startActivity(sendLab);
                 }
                 break;

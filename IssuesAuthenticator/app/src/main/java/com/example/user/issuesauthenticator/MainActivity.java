@@ -14,18 +14,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
+//import java.net.CookieHandler;
+//import java.net.CookieManager;
+//import java.net.CookiePolicy;
+import android.webkit.CookieManager;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-
+    public CookieManager manager = CookieManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.setAcceptCookie(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -34,24 +37,24 @@ public class MainActivity extends AppCompatActivity {
         EditText loginView = (EditText) findViewById(R.id.login);
         final String login_text = loginView.getText().toString();
         EditText senhaView = (EditText) findViewById(R.id.senha);
-        final String senha_text = loginView.getText().toString();
-
+        final String senha_text = senhaView.getText().toString();
 
         //Fazendo Request HTTP
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://requestb.in/1c4rl0z1";
-
-        CookieManager manager = new CookieManager();
-        CookieHandler.setDefault(manager);
+        final String url = "https://requestb.in/1n4669z1";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Debug",response);
+                Log.d("AFFE",response);
+                if(manager.hasCookies()){
+                    Log.d("MAOE", manager.getCookie(url));
+                }
+
             }}, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error", error.getMessage());
+                Log.d("Baaad", error.getMessage());
             }}){
             @Override
             protected Map<String, String> getParams(){
