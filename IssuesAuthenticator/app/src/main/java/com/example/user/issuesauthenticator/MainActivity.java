@@ -14,21 +14,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-//import java.net.CookieHandler;
-//import java.net.CookieManager;
-//import java.net.CookiePolicy;
-import android.webkit.CookieManager;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    public CookieManager manager = CookieManager.getInstance();
+    public CookieManager manager = new CookieManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        manager.setAcceptCookie(true);
+        CookieHandler.setDefault(manager);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -41,16 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Fazendo Request HTTP
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "https://requestb.in/1n4669z1";
-
+        final String url = "https://requestb.in/15urlgk1";
+//        final String url = "http://www.whatarecookies.com/cookietest.asp";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("AFFE",response);
-                if(manager.hasCookies()){
-                    Log.d("MAOE", manager.getCookie(url));
-                }
-
             }}, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -65,8 +63,28 @@ public class MainActivity extends AppCompatActivity {
             }};
 
         queue.add(stringRequest);
-
-        //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+
     }
 }
+
+
+
+
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Log.d("AFFE",response);
+//                List<HttpCookie> cookieList = manager.getCookieStore().get(URI.create(url));
+//                if(!cookieList.isEmpty()){
+//                    Log.d("MAOE", cookieList.get(0).getName());
+//                }
+//                else{
+//                    Log.d("MAOE", "nada aqui bro");
+//                }
+//
+//            }}, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("Baaad", error.getMessage());
+//            }});

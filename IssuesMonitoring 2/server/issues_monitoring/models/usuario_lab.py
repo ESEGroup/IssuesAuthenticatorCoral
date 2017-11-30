@@ -30,6 +30,24 @@ class UsuarioLab(Usuario):
 
         return UsuarioLab(*data[1:], id=data[0])
 
+    def obter_preferencias_ambiente(user_id, lab_id):
+        return db.fetchone("""SELECT temp_min, temp_max, umid_min, umid_max, lum_min, lum_max
+                            FROM User_Pref
+                            WHERE user_id = ? AND lab_id = ?""", (user_id, lab_id))
+
+    def salvar_preferencias_ambiente(usuario, laboratorio, tmin, tmax, umin, umax, lmin, lmax):
+        db.execute("""INSERT INTO User_Pref (user_id, lab_id, temp_min, temp_max, umid_min, umid_max, lum_min, lum_max)
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                      ON DUPLICATE KEY UPDATE
+                      temp_min = VALUES(temp_min)
+                      temp_max = VALUES(temp_max)
+                      umid_min = VALUES(umid_min)
+                      umid_max = VALUES(umid_max)
+                      lum_min = VALUES(lum_min)
+                      lum_max = VALUES(lum_max);""", (usuario, laboratorio, tmin, tmax, umin, umax, lmin, lmax))
+
+
+
     def obter_todos():
         data = db.fetchall("SELECT id, user_id, nome, email, data_aprov FROM User_Lab")
         return [UsuarioLab(*d[1:], id=d[0]) for d in data]
@@ -93,9 +111,6 @@ class UsuarioLab(Usuario):
                 usuarios += [UsuarioLab(*d[:-1], data_entrada=d[-1])]
         return usuarios
 
-    def pegar_preferencias(user_id, lab_id):
-        data = db.fetchone("""SELECT
-                              """)
 
     def cadastrar(self):
         values = (self.user_id,

@@ -69,6 +69,8 @@ def work():
             data_aprov INTEGER);
     """)
 
+
+    #NOVIDADE MUCHO QUENTE
     cursor.execute("""
     CREATE TABLE User_Pref(
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -79,8 +81,10 @@ def work():
             umid_min FLOAT NOT NULL,
             umid_max FLOAT NOT NULL,
             lum_min FLOAT NOT NULL,
-            lum_max FLOAT NOT NULL);
+            lum_max FLOAT NOT NULL,
+            UNIQUE KEY (user_id, lab_id));
     """)
+    #NOVIDADE MUCHO QUENTE
 
     cursor.execute("""
     CREATE TABLE Presenca(

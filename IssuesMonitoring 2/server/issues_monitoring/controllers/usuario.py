@@ -8,6 +8,15 @@ def autenticar(usuario, senha):
 def autenticar_usuario_lab(usuario):
     return UsuarioLab.existe(usuario)
 
+def registrar_presenca(evento):
+    return UsuarioLab.registrar_presenca(evento)
+
+def obter_preferencias_ambiente(usuario, laboratorio):
+    return UsuarioLab.obter_preferencias_ambiente(usuario, laboratorio)
+
+def salvar_preferencias_ambiente(usuario, laboratorio, tmin, tmax, umin, umax, lmin, lmax)
+    UsuarioLab.salvar_preferencias_ambiente(usuario, laboratorio, tmin, tmax, umin, umax, lmin, lmax)
+
 def alterar_senha(usuario, senha):
     return UsuarioSistema.alterar_senha(usuario, senha)
 

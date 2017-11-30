@@ -1,0 +1,32 @@
+TODO LIST
+
+
+
+Autenticar
+	POST no app (pronto?)
+	passar função p classe IMI
+	app.route no IM (pronto?)
+
+
+
+Registrar presença
+	POST no app com ID do Lab e Nome de Usuario. (pronto?)
+	Função criada na classe IssuesMonitoringInterface
+	Fazer um Get Redirect p voltar pro Login
+
+
+
+	app.route no IM (pronto?)
+	chamando função no IM (pronto?)
+
+
+
+
+Registrar preferencias
+	POST p pegar todos os valores iniciais
+	POST no app cm todos valores p atualizar
+	Conseguir pegar os dados dos wheels e atualizar os wheels.
+
+	approut no IM
+	criar base de dados com USER ID, LAB ID e prefs
+	criar função no IM usuario_lab

@@ -1,4 +1,4 @@
-from os import getcwd, stat
+Vc from os import getcwd, stat
 from os.path import join
 from flask          import render_template, request, redirect, url_for, session, Response
 from werkzeug.datastructures import Headers
@@ -29,10 +29,45 @@ def presenca_post():
 
 
     controllers.registrar_presenca([{"epoch": datetime.now().timestamp(),
-                                    "event":request.form.get('evento'),
-                                    "user_id":session["user_id"],
-                                    "lab_id":request.form.get('lab_id')}])
+                                    "event":evento,
+                                    "user_id":session["id"],
+                                    "lab_id":laboratorio}])
 
+@app.route('/pegar-preferencias', methods=['POST'])
+def pegar_preferencias():
+    laboratorio =  request.form.get('lab_id') or ''
+
+    if not autenticado():
+        return redirect(url_for('login'))
+
+    if '' in laboratorio:
+        kwargs = {"e": "Por favor preencha todos os campos"}
+        return redirect(url_for('login', **kwargs))
+
+    prefs = controllers.obter_preferencias_ambiente(session["id"], laboratorio)
+    json_data = json.dumps({'temp_min': prefs[0] or '23',
+                            'temp_max': prefs[1] or '24',
+                            'umid_min': prefs[2] or '60',
+                            'umid_max': prefs[3] or '60',
+                            'lum_min':  prefs[4] or '600',
+                            'lum_max':  prefs[5] or '600'})
+    return json_data
+
+@app.route('/salvar-preferencias', methods=['POST'])
+def salvar_preferencias():
+    laboratorio =  request.form.get('lab_id') or ''
+
+    if not autenticado():
+        return redirect(url_for('login'))
+
+    if '' in laboratorio:
+        kwargs = {"e": "Por favor preencha todos os campos"}
+        return redirect(url_for('login', **kwargs))
+
+    controllers.salvar_preferencias_ambiente(session['id'], 
+                                            laboratorio, request.form.get('temp_min'), request.form.get('temp_max'),
+                                            request.form.get('umid_min'), request.form.get('umid_max'),
+                                            request.form.get('lum_min'), request.form.get('lum_max'))
 
 @app.route('/')
 def root():

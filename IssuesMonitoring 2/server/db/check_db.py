@@ -58,3 +58,8 @@ print("\nTable User_Sys")
 meta = cursor.execute("PRAGMA table_info('User_Sys')")
 for r in meta:
     print(r)
+
+print("\nTable Preferencias de Usuarios")
+meta = cursor.execute("PRAGMA table_info('User_Pref')")
+for r in meta:
+    print(r)
