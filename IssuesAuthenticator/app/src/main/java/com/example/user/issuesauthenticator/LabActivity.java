@@ -14,8 +14,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +36,7 @@ public class LabActivity extends AppCompatActivity {
         boolean onwifi = false;
         String ssid = "";
         String mac = "";
-        Intent sendLab = new Intent(this, DisplayMessageActivity.class);
+        final Intent sendLab = new Intent(this, DisplayMessageActivity.class);
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         if (WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState()) == NetworkInfo.DetailedState.CONNECTED) {
@@ -56,12 +59,10 @@ public class LabActivity extends AppCompatActivity {
                 break;
         }
 
-
         if (onwifi) {
             final String lab_id = lab_id_aux;
             RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "https://requestb.in/15urlgk1";
-//        final String url = "http://www.whatarecookies.com/cookietest.asp";
+            final String url = "https://requestb.in/15urlgk1"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -78,9 +79,28 @@ public class LabActivity extends AppCompatActivity {
                     params.put("evento", "IN");
                     return params;
                 }};
-
             queue.add(stringRequest);
 
+            final String url_get_pref = "a"; // REQUEST DAS PREFERENCIAS, NA PRÁTICA SERÁ "issuesmonitoring.com/pegar-preferencias"
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url_get_pref, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("response", response.toString());
+                    sendLab.putExtra("jsonPrefs", response.toString());
+                }},
+                new Response.ErrorListener(){
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Baaad", error.getMessage());
+                }}){
+                @Override
+                protected Map<String, String> getParams(){
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("lab_id", lab_id);
+                    return params;
+                }};
+
+            queue.add(jsonRequest);
             startActivity(sendLab);
         }
     }

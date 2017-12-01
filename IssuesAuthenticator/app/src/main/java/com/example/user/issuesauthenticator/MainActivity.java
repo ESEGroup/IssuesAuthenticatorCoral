@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Fazendo Request HTTP
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "https://requestb.in/15urlgk1";
-//        final String url = "http://www.whatarecookies.com/cookietest.asp";
+        final String url = "https://requestb.in/15urlgk1"; //AUTENTICADOR, NA PRÁTICA SERÁ "issuesmonitoring.com/login"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
