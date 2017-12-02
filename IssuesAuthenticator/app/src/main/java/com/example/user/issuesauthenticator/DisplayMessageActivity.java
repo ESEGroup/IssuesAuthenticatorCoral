@@ -30,25 +30,27 @@ public class DisplayMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
         Bundle bundle =getIntent().getExtras();
-        lab_id = bundle.getString("labID");
+        String labId = bundle.getString("labID");
+        lab_id = bundle.getString("lab");
         String jsonString = bundle.getString("jsonPrefs");
+        Log.d("foi?", jsonString);
         TextView txtlabid = (TextView) findViewById(R.id.labid);
-        txtlabid.setText(lab_id);
-//        try {
-//            updateSpinners(jsonString);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        txtlabid.setText(labId);
+        try {
+            updateSpinners(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateSpinners(String jsonString) throws JSONException{
         JSONObject prefObject = new JSONObject(jsonString);
-        int tmin = prefObject.getInt("temp_min");
-        int tmax = prefObject.getInt("temp_max");
-        int umin = prefObject.getInt("umid_min");
-        int umax = prefObject.getInt("umid_max");
-        int lmin = prefObject.getInt("lum_min");
-        int lmax = prefObject.getInt("lum_max");
+        int tmin = (int) Float.parseFloat(prefObject.getString("temp_min"));
+        int tmax = (int) Float.parseFloat(prefObject.getString("temp_max"));
+        int umin = (int) Float.parseFloat(prefObject.getString("umid_min"));
+        int umax = (int) Float.parseFloat(prefObject.getString("umid_max"));
+        int lmin = (int) Float.parseFloat(prefObject.getString("lum_min"));
+        int lmax = (int) Float.parseFloat(prefObject.getString("lum_max"));
 
         Integer[] itemsTempMin = new Integer[]{16,17,18,19,20,21,22};
         ArrayAdapter<Integer> adapterTempMin = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, itemsTempMin);
@@ -89,6 +91,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     public void onSaveClicked(View v){
+        final String lab1 = lab_id;
+        Log.d("teste", lab1);
         RequestQueue queue = Volley.newRequestQueue(this);
         final String url = "http://192.168.86.74:8080/salvar-preferencias";        //REQUEST DE ARMAZENAR NOVAS PREFS, NA PRÁTICA SERÁ "issuesmonitoring.com/salvar-preferencias"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -103,7 +107,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("lab_id", lab_id);
+                params.put("lab_id", lab1);
                 Spinner mspin = (Spinner) findViewById(R.id.spinner5);
                 params.put("temp_min", mspin.getSelectedItem().toString());
                 mspin = (Spinner) findViewById(R.id.spinner4);

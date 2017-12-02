@@ -30,12 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(manager);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
     public void preferenceOptions(View view) {
-        Intent intent = new Intent(this, LabActivity.class);
+        final Intent intent = new Intent(this, LabActivity.class);
         EditText loginView = (EditText) findViewById(R.id.login);
         final String login_text = loginView.getText().toString();
         EditText senhaView = (EditText) findViewById(R.id.senha);
@@ -48,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("AFFE",response);
+                if(response.equals("ok")){
+                    Log.d("affe", "chegou");
+                }
+                List<HttpCookie> cookieList = manager.getCookieStore().getCookies();
+                if(!cookieList.isEmpty()){
+                    startActivity(intent);
+                }
             }}, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -62,13 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }};
 
         queue.add(stringRequest);
-
-//        String url2 = "http://192.168.86.74:8080";
-//        List<HttpCookie> cookieList = manager.getCookieStore().get(URI.create(url2));
-//        if(!cookieList.isEmpty()){
-//            startActivity(intent);
-//        }
-        startActivity(intent);
 
     }
 }

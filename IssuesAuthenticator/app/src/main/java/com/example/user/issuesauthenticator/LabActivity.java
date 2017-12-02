@@ -87,6 +87,8 @@ public class LabActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     Log.d("response", response);
                     sendLab.putExtra("jsonPrefs", response);
+                    sendLab.putExtra("lab", lab_id);
+                    startActivity(sendLab);
                 }},
                 new Response.ErrorListener(){
                 @Override
@@ -101,7 +103,8 @@ public class LabActivity extends AppCompatActivity {
                 }};
 
             queue.add(jsonRequest);
-            startActivity(sendLab);
+
+
         }
     }
 }
