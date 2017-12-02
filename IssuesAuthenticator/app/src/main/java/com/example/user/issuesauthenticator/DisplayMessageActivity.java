@@ -34,11 +34,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
         String jsonString = bundle.getString("jsonPrefs");
         TextView txtlabid = (TextView) findViewById(R.id.labid);
         txtlabid.setText(lab_id);
-        try {
-            updateSpinners(jsonString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            updateSpinners(jsonString);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void updateSpinners(String jsonString) throws JSONException{
@@ -90,7 +90,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
     public void onSaveClicked(View v){
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "https://requestb.in/15urlgk1";        //REQUEST DE ARMAZENAR NOVAS PREFS, NA PRÁTICA SERÁ "issuesmonitoring.com/salvar-preferencias"
+        final String url = "http://192.168.86.74:8080/salvar-preferencias";        //REQUEST DE ARMAZENAR NOVAS PREFS, NA PRÁTICA SERÁ "issuesmonitoring.com/salvar-preferencias"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

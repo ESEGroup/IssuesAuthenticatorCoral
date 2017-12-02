@@ -54,7 +54,7 @@ public class LabActivity extends AppCompatActivity {
                 break;
             case R.id.button3:          //LENS2 IS CLICKED
                 sendLab.putExtra("labID", "LENS 2");
-                lab_id_aux = "2";
+                lab_id_aux = "1";
                 onwifi = true;
                 break;
         }
@@ -62,11 +62,11 @@ public class LabActivity extends AppCompatActivity {
         if (onwifi) {
             final String lab_id = lab_id_aux;
             RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "https://requestb.in/15urlgk1"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
+            final String url = "http://192.168.86.74:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d("AFFE",response);
+                    //Log.d("AFFE",response);
                 }}, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -81,12 +81,12 @@ public class LabActivity extends AppCompatActivity {
                 }};
             queue.add(stringRequest);
 
-            final String url_get_pref = "a"; // REQUEST DAS PREFERENCIAS, NA PRÁTICA SERÁ "issuesmonitoring.com/pegar-preferencias"
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url_get_pref, null, new Response.Listener<JSONObject>() {
+            final String url_get_pref = "http://192.168.86.74:8080/pegar-preferencias"; // REQUEST DAS PREFERENCIAS, NA PRÁTICA SERÁ "issuesmonitoring.com/pegar-preferencias"
+            StringRequest jsonRequest = new StringRequest(Request.Method.POST, url_get_pref, new Response.Listener<String>() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    Log.d("response", response.toString());
-                    sendLab.putExtra("jsonPrefs", response.toString());
+                public void onResponse(String response) {
+                    Log.d("response", response);
+                    sendLab.putExtra("jsonPrefs", response);
                 }},
                 new Response.ErrorListener(){
                 @Override

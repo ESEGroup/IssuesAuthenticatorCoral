@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Fazendo Request HTTP
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "https://requestb.in/15urlgk1"; //AUTENTICADOR, NA PRÁTICA SERÁ "issuesmonitoring.com/login"
+        final String url = "http://192.168.86.74:8080/login"; //AUTENTICADOR, NA PRÁTICA SERÁ "issuesmonitoring.com/login"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -62,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
             }};
 
         queue.add(stringRequest);
+
+//        String url2 = "http://192.168.86.74:8080";
+//        List<HttpCookie> cookieList = manager.getCookieStore().get(URI.create(url2));
+//        if(!cookieList.isEmpty()){
+//            startActivity(intent);
+//        }
         startActivity(intent);
 
     }
