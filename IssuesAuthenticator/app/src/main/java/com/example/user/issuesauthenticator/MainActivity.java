@@ -1,11 +1,18 @@
 package com.example.user.issuesauthenticator;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,13 +35,19 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     public CookieManager manager = new CookieManager();
 
+    private PopupWindow popupWindow;
+    private LayoutInflater layoutInflater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(manager);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
     }
+
     public void preferenceOptions(View view) {
         final Intent intent = new Intent(this, LabActivity.class);
         EditText loginView = (EditText) findViewById(R.id.login);
@@ -51,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("AFFE",response);
                 if(response.equals("ok")){
                     Log.d("affe", "chegou");
+                } else {
+                    TextView errorText = (TextView) findViewById(R.id.textView8);
+                    errorText.setText("Usuário inválido");
                 }
                 List<HttpCookie> cookieList = manager.getCookieStore().getCookies();
                 if(!cookieList.isEmpty()){
@@ -60,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Baaad", error.getMessage());
+
+
             }}){
             @Override
             protected Map<String, String> getParams(){
@@ -70,27 +88,5 @@ public class MainActivity extends AppCompatActivity {
             }};
 
         queue.add(stringRequest);
-
     }
 }
-
-
-
-
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d("AFFE",response);
-//                List<HttpCookie> cookieList = manager.getCookieStore().get(URI.create(url));
-//                if(!cookieList.isEmpty()){
-//                    Log.d("MAOE", cookieList.get(0).getName());
-//                }
-//                else{
-//                    Log.d("MAOE", "nada aqui bro");
-//                }
-//
-//            }}, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("Baaad", error.getMessage());
-//            }});

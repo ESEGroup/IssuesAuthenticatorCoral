@@ -1,6 +1,12 @@
 
 package com.example.user.issuesauthenticator;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,9 +30,15 @@ import java.util.Map;
 
 public class DisplayMessageActivity extends AppCompatActivity {
     private String lab_id;
+    private int mInterval = 60000;
+    private Handler mHandler;
+    private boolean onwifi;
+    String ssid;
+    Intent backtolab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        onwifi = true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
         Bundle bundle =getIntent().getExtras();
@@ -36,11 +48,24 @@ public class DisplayMessageActivity extends AppCompatActivity {
         Log.d("foi?", jsonString);
         TextView txtlabid = (TextView) findViewById(R.id.labid);
         txtlabid.setText(labId);
+
         try {
             updateSpinners(jsonString);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        mHandler = new Handler();
+        startRepeatingTask();
+
+        backtolab = new Intent(this, LabActivity.class);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopRepeatingTask();
     }
 
     public void updateSpinners(String jsonString) throws JSONException{
@@ -123,7 +148,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 return params;
             }};
         queue.add(stringRequest);
-        leaveLab();
     }
 
     public void leaveLab(){
@@ -148,6 +172,44 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 return params;
             }};
         queue.add(stringRequest);
+    }
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                //updateStatus(); //this function can change value of mInterval.
+            } finally {
+                TextView errormsg = (TextView) findViewById(R.id.textView9);
+                errormsg.setText("Entre no wifi do laboratório ou sua ausência será registrada nos próximos 20m");
+                WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                Log.d("timer", "tick");
+                if (WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState()) == NetworkInfo.DetailedState.CONNECTED) {
+                    ssid = wifiInfo.getSSID();
+                }
+
+                ssid="b";
+                if((!ssid.equals("a")) && (!onwifi)){
+                    leaveLab();
+                    startActivity(backtolab);
+                }
+
+                if(!ssid.equals("a")){
+                    onwifi = false;
+                }
+
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
     }
 
 }
