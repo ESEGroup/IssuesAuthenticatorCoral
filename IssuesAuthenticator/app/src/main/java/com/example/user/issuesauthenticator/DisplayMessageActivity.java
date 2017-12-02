@@ -123,7 +123,31 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 return params;
             }};
         queue.add(stringRequest);
+        leaveLab();
+    }
 
+    public void leaveLab(){
+        final String lab1 = lab_id;
+        Log.d("teste", lab1);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final String url = "http://192.168.86.74:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Log.d("AFFE",response);
+            }}, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Baaad", error.getMessage());
+            }}){
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("lab_id", lab1);
+                params.put("evento", "OUT");
+                return params;
+            }};
+        queue.add(stringRequest);
     }
 
 }
