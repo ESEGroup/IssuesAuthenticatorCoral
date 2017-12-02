@@ -67,6 +67,7 @@ def salvar_preferencias():
                                             laboratorio, request.form.get('temp_min'), request.form.get('temp_max'),
                                             request.form.get('umid_min'), request.form.get('umid_max'),
                                             request.form.get('lum_min'), request.form.get('lum_max'))
+    return 'ok'
 
 @app.route('/')
 def root():
@@ -106,6 +107,7 @@ def login_post():
                 now = int(datetime.now().timestamp())
                 session['expiration'] = now + Config.session_duration
                 kwargs = {}
+                return 'ok'
             else:
                 kwargs = {"e": "Usuário ou senha incorretos"}
         else:

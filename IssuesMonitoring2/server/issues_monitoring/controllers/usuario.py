@@ -12,7 +12,7 @@ def registrar_presenca(evento):
     return UsuarioLab.registrar_presenca(evento)
 
 def obter_preferencias_ambiente(usuario, laboratorio):
-    return UsuarioLab.obter_preferencias_ambiente(usuario, laboratorio)
+    return UsuarioLab.obter_preferencias_ambiente(usuario, laboratorio) or [False, False, False, False, False, False]
 
 def salvar_preferencias_ambiente(usuario, laboratorio, tmin, tmax, umin, umax, lmin, lmax):
     UsuarioLab.salvar_preferencias_ambiente(usuario, laboratorio, tmin, tmax, umin, umax, lmin, lmax)
