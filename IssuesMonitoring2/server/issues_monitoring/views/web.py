@@ -9,6 +9,7 @@ from ..common.utils import (autenticado, admin_autenticado, hoje, agora,
 from ..             import app, Config, controllers
 import json
 import pdfkit
+from ..models import Evento
 
 class HeadlessPDFKit(pdfkit.PDFKit):
     def command(self, path=None):
@@ -27,26 +28,24 @@ def presenca_post():
         kwargs = {"e": "Por favor preencha todos os campos"}
         return redirect(url_for('login', **kwargs))
 
-
-    controllers.registrar_presenca([{"epoch": datetime.now().timestamp(),
-                                    "event":evento,
-                                    "user_id":session["id"],
-                                    "lab_id":laboratorio}])
+    controllers.registrar_presenca([ Evento(datetime.now().timestamp(),evento,session["id"],laboratorio)])
+    return 'ok'
 
 @app.route('/pegar-preferencias', methods=['POST'])
 def pegar_preferencias():
     laboratorio =  request.form.get('lab_id') or ''
 
     if not autenticado():
-        return redirect(url_for('login'))
+        kwargs = {"e": "Não autenticado"}
+        return redirect(url_for('login', **kwargs))
 
     if not laboratorio:
-        kwargs = {"e": "Por favor preencha todos os campos"}
+        kwargs = {"e": "Por favor preencha laboratorio"}
         return redirect(url_for('login', **kwargs))
 
     prefs = controllers.obter_preferencias_ambiente(session["id"], laboratorio)
-    json_data = json.dumps({'temp_min': prefs[0] or '23',
-                            'temp_max': prefs[1] or '24',
+    json_data = json.dumps({'temp_min': prefs[0] or '22',
+                            'temp_max': prefs[1] or '22',
                             'umid_min': prefs[2] or '60',
                             'umid_max': prefs[3] or '60',
                             'lum_min':  prefs[4] or '600',
