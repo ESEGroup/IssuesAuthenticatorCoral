@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     public void preferenceOptions(View view) {
         final Intent intent = new Intent(this, LabActivity.class);
         EditText loginView = (EditText) findViewById(R.id.login);

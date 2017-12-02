@@ -63,6 +63,10 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         stopRepeatingTask();

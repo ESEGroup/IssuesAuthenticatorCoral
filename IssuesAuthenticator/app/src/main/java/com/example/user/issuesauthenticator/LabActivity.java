@@ -32,6 +32,10 @@ public class LabActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lab);
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     public void onLabClicked(View v) {
         boolean onwifi = false;
         String ssid = "";
