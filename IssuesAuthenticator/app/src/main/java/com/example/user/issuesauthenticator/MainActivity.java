@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Fazendo Request HTTP
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "http://192.168.86.74:8080/login"; //AUTENTICADOR, NA PRÁTICA SERÁ "issuesmonitoring.com/login"
+        final String url = "http://35.199.100.176:8080/login"; //AUTENTICADOR, NA PRÁTICA SERÁ "issuesmonitoring.com/login"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -123,7 +123,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         final String lab1 = lab_id;
         Log.d("teste", lab1);
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "http://192.168.86.74:8080/salvar-preferencias";        //REQUEST DE ARMAZENAR NOVAS PREFS, NA PRÁTICA SERÁ "issuesmonitoring.com/salvar-preferencias"
+        final String url = "http://35.199.100.176:8080/salvar-preferencias";        //REQUEST DE ARMAZENAR NOVAS PREFS, NA PRÁTICA SERÁ "issuesmonitoring.com/salvar-preferencias"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -158,7 +158,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         final String lab1 = lab_id;
         Log.d("teste", lab1);
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "http://192.168.86.74:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
+        final String url = "http://35.199.100.176:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

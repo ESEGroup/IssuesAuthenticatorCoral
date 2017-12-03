@@ -66,7 +66,7 @@ public class LabActivity extends AppCompatActivity {
         if (onwifi) {
             final String lab_id = lab_id_aux;
             RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "http://192.168.86.74:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
+            final String url = "http://35.199.100.176:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -85,7 +85,7 @@ public class LabActivity extends AppCompatActivity {
                 }};
             queue.add(stringRequest);
 
-            final String url_get_pref = "http://192.168.86.74:8080/pegar-preferencias"; // REQUEST DAS PREFERENCIAS, NA PRÁTICA SERÁ "issuesmonitoring.com/pegar-preferencias"
+            final String url_get_pref = "http://35.199.100.176:8080/pegar-preferencias"; // REQUEST DAS PREFERENCIAS, NA PRÁTICA SERÁ "issuesmonitoring.com/pegar-preferencias"
             StringRequest jsonRequest = new StringRequest(Request.Method.POST, url_get_pref, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
