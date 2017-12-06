@@ -35,6 +35,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
     private boolean onwifi;
     String ssid;
     Intent backtolab;
+    String labId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -42,7 +43,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
         Bundle bundle =getIntent().getExtras();
-        String labId = bundle.getString("labID");
+        labId = bundle.getString("labID");
         lab_id = bundle.getString("lab");
         String jsonString = bundle.getString("jsonPrefs");
         Log.d("foi?", jsonString);
@@ -123,7 +124,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         final String lab1 = lab_id;
         Log.d("teste", lab1);
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "http://35.199.100.176:8080/salvar-preferencias";        //REQUEST DE ARMAZENAR NOVAS PREFS, NA PRÁTICA SERÁ "issuesmonitoring.com/salvar-preferencias"
+        final String url = " http://35.199.79.158:8080/salvar-preferencias";        //REQUEST DE ARMAZENAR NOVAS PREFS, NA PRÁTICA SERÁ "issuesmonitoring.com/salvar-preferencias"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -158,7 +159,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         final String lab1 = lab_id;
         Log.d("teste", lab1);
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "http://35.199.100.176:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
+        final String url = " http://35.199.79.158:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -185,22 +186,25 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 //updateStatus(); //this function can change value of mInterval.
             } finally {
                 TextView errormsg = (TextView) findViewById(R.id.textView9);
-                errormsg.setText("Entre no wifi do laboratório ou sua ausência será registrada nos próximos 20m");
                 WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                 Log.d("timer", "tick");
+                ssid="b";
                 if (WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState()) == NetworkInfo.DetailedState.CONNECTED) {
                     ssid = wifiInfo.getSSID();
                 }
 
-                ssid="b";
-                if((!ssid.equals("a")) && (!onwifi)){
+                if((!ssid.equals(labId)) && (!onwifi)){
                     leaveLab();
                     startActivity(backtolab);
                 }
 
                 if(!ssid.equals("a")){
                     onwifi = false;
+                    errormsg.setText("Entre no wifi do laboratório ou sua ausência será registrada nos próximos 20m");
+                } else {
+                    onwifi = true;
+                    errormsg.setText("");
                 }
 
                 mHandler.postDelayed(mStatusChecker, mInterval);

@@ -1,0 +1,6 @@
+APK atualizada para apontar para o novo servidor.
+Usuário válido: "tuniks"
+
+Botão LENS 1 checa por rede com SSID "LENS 1". Botão LENS 2 teve checagem desativada para auxiliar na testagem.
+
+Dentro da página de preferencias, ambos os laboratórios checarão por rede com SSID de nome LENS 1/LENS 2 (respectivamente). Tempo de expulsão do laboratório foi reduzido à 1min, e ocorre na segunda checagem pelo nome da rede (a primeira checagem ocorre imediatamente).

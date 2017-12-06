@@ -51,9 +51,9 @@ public class LabActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.button4:          //LENS1 IS CLICKED
                 sendLab.putExtra("labID", "LENS 1");
-                if (ssid.equals("Padang2.0")) {
+                if (ssid.equals("LENS 1")) {
                     onwifi = true;
-                    lab_id_aux = "1";
+                    lab_id_aux = "2";
                 }
                 break;
             case R.id.button3:          //LENS2 IS CLICKED
@@ -66,7 +66,7 @@ public class LabActivity extends AppCompatActivity {
         if (onwifi) {
             final String lab_id = lab_id_aux;
             RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "http://35.199.100.176:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
+            final String url =  "http://35.199.79.158:8080/registrar-presenca"; //REQUEST DA PRESENÇA, NA PRÁTICA SERÁ "issuesmonitoring.com/registrar-presenca"
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -85,7 +85,7 @@ public class LabActivity extends AppCompatActivity {
                 }};
             queue.add(stringRequest);
 
-            final String url_get_pref = "http://35.199.100.176:8080/pegar-preferencias"; // REQUEST DAS PREFERENCIAS, NA PRÁTICA SERÁ "issuesmonitoring.com/pegar-preferencias"
+            final String url_get_pref = " http://35.199.79.158:8080/pegar-preferencias"; // REQUEST DAS PREFERENCIAS, NA PRÁTICA SERÁ "issuesmonitoring.com/pegar-preferencias"
             StringRequest jsonRequest = new StringRequest(Request.Method.POST, url_get_pref, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
